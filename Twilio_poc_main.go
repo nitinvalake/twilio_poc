@@ -39,7 +39,7 @@ func sendSms(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintf(w, "Kindly enter valid data to send sms")
 	}
-	fmt.Println("Send Message Request: %+v", smsReq)
+	fmt.Println("Client Request: %+v", smsReq)
 
 	//Fetching sms data from sms send request
 	msgData := url.Values{}
@@ -64,14 +64,14 @@ func sendSms(w http.ResponseWriter, r *http.Request) {
 		if (err == nil) {
 			fmt.Println(data["sid"])
 			resp1 = response{Status: "Success", StatusText: "SMS Sent!"}
-			w.WriteHeader(http.StatusOk)
+			w.WriteHeader(http.StatusOK)
 		}
 	} else {
 		fmt.Println(resp.Status);
 		resp1 = response{Status: "Failed", StatusText: resp.Status}	
 		w.WriteHeader(resp.StatusCode)	
 	}	
-		
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp1)
 }
 
