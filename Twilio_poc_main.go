@@ -53,10 +53,11 @@ func sendSms(w http.ResponseWriter, r *http.Request) {
 	req.SetBasicAuth(accountSid, authToken)
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
+	fmt.Println("Request to be sent to Twilio: ",req)
 	var resp1 response
 
 	resp, _ := client.Do(req)
+	fmt.Println("Twilio Response: ",resp)
 	if (resp.StatusCode >= 200 && resp.StatusCode < 300) {
 		var data map[string]interface{}
 		decoder := json.NewDecoder(resp.Body)
